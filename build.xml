@@ -1,0 +1,112 @@
+<project name="MyTestProject" basedir="." default="compile">
+    
+	<import file="test-deps.xml" />
+	
+	<property name="jars" value="test-lib"/>
+
+    <target name="download">
+        <mkdir dir="${jars}"/>
+        <get src="${repo}/info/cukes/cucumber-core/${cucumber-jvm.version}/cucumber-core-${cucumber-jvm.version}.jar"
+             dest="${jars}/cucumber-core-${cucumber-jvm.version}.jar"/>
+        <get src="${repo}/info/cukes/cucumber-java/${cucumber-jvm.version}/cucumber-java-${cucumber-jvm.version}.jar"
+             dest="${jars}/cucumber-java-${cucumber-jvm.version}.jar"/>
+        <get src="${repo}/info/cukes/cucumber-junit/${cucumber-jvm.version}/cucumber-junit-${cucumber-jvm.version}.jar"
+             dest="${jars}/cucumber-junit-${cucumber-jvm.version}.jar"/>
+        <get src="${repo}/info/cukes/cucumber-jvm-deps/${cucumber-jvm-deps.version}/cucumber-jvm-deps-${cucumber-jvm-deps.version}.jar"
+             dest="${jars}/cucumber-jvm-deps-${cucumber-jvm-deps.version}.jar"/>
+        <get src="${repo}/info/cukes/gherkin/${gherkin.version}/gherkin-${gherkin.version}.jar"
+             dest="${jars}/gherkin-${gherkin.version}.jar"/>
+        <get src="${repo}/info/cukes/cucumber-html/${cucumber-html.version}/cucumber-html-${cucumber-html.version}.jar"
+             dest="${jars}/cucumber-html-${cucumber-html.version}.jar"/>
+        <get src="${repo}/junit/junit/${junit.version}/junit-${junit.version}.jar"
+             dest="${jars}/junit-${junit.version}.jar"/>
+    	<get src="${appengine-sdk.repo}/appengine-java-sdk-${appengine-sdk.version}.zip"
+    	             dest="${jars}/appengine-sdk.zip"/>
+    	<unzip src="${jars}/appengine-sdk.zip" dest="${jars}"/>
+    </target>
+	
+	<!-- folders -->
+    <property name="build" value="war/WEB-INF/classes"/>
+	<property name="build-test" value="target/test-classes"/>
+	<property name="resources-test" value="test/resources"/>
+	<property name="appengine_sdk_shared_lib" value="${jars}/" />
+
+    <target name="classpath">
+        <path id="classpath">
+            <fileset dir="${jars}">
+                <include name="*.jar"/>
+            	<include name="appengine-java-sdk-*/lib/shared/**/*.jar"/>
+            	<exclude name="*datanucleus*"/>
+            </fileset>
+            <pathelement location="${resources-test}"/>
+            <pathelement location="${build}"/>
+            <pathelement location="${build-test}"/>
+        </path>
+    </target>
+
+    <target name="compile" depends="classpath">
+        <mkdir dir="${build}"/>
+        <javac srcdir="src" destdir="${build}" classpathref="classpath" includeantruntime="false"/>
+    </target>
+
+    <target name="compile-test" depends="compile,classpath">
+        <mkdir dir="${build-test}"/>
+        <javac srcdir="test" destdir="${build-test}" classpathref="classpath" includeantruntime="false"/>
+    </target>
+	
+	<target name="eclipse-test-runner" depends="compile-test">
+		<junit printsummary="false" haltonfailure="no" showoutput="false">
+		  <classpath>
+		      <pathelement path="${classpath}"/>
+			  <fileset dir="${jars}">
+			  	<include name="junit-${junit.version}.jar"/>
+			  </fileset>
+		  	  <pathelement location="${build}"/>
+		      <pathelement location="${build-test}"/>
+		  </classpath>
+
+		  <batchtest fork="yes">
+		  	<formatter type="plain" usefile="false"/>
+		    <fileset dir="test">
+		      <include name="**/*Test.java"/>
+		      <exclude name="**/AllTests.java"/>
+		    </fileset>
+		  </batchtest>
+		</junit>
+	</target>
+
+    <target name="runcukes" depends="compile-test">
+        <mkdir dir="target/cucumber-junit-report"/>
+        <java classname="cucumber.api.cli.Main" fork="true" failonerror="false" resultproperty="cucumber.exitstatus">
+            <classpath refid="classpath"/>
+           
+            <arg value="--glue"/>
+            <arg value=""/>
+            <arg value="${build-test}"/>
+        </java>
+
+        <junitreport todir="target/cucumber-junit-report">
+            <fileset dir="target">
+                <include name="cucumber-junit-report.xml"/>
+            </fileset>
+            <report format="frames" todir="target/cucumber-junit-report"/>
+        </junitreport>
+
+        <fail message="Cucumber failed">
+            <condition>
+                <not>
+                    <equals arg1="${cucumber.exitstatus}" arg2="0"/>
+                </not>
+            </condition>
+        </fail>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build}"/>
+    	<delete dir="${build-test}"/>
+    </target>
+
+    <target name="clobber" depends="clean">
+        <delete dir="${jars}"/>
+    </target>
+</project>

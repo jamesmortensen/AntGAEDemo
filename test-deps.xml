@@ -1,0 +1,15 @@
+<project>
+	
+	<property name="repo" value="https://repo1.maven.org/maven2"/>
+
+    <!-- To figure out compatible combinations of versions, you should examine dependencies in the Maven POM files -->
+    <property name="cucumber-jvm.version" value="1.1.5"/>
+    <property name="cucumber-jvm-deps.version" value="1.0.3"/>
+    <property name="gherkin.version" value="2.12.1"/>
+    <property name="cucumber-html.version" value="0.2.3"/>
+    <property name="junit.version" value="4.11"/>
+	<property name="appengine-sdk.version" value="1.9.25"/>
+    
+	<property name="appengine-sdk.repo" value="https://storage.googleapis.com/appengine-sdks/featured" />
+
+</project>
