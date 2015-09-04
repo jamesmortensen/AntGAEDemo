@@ -31,3 +31,18 @@ $ ant eclipse-test-runner
 
 Now, whenever you save your changes, the JUnit tests will run automatically.
 
+## Configure Jenkins Continuous Integration
+
+This assumes you've already installed Jenkins. See the Jenkins documentation for instructions.
+
+- In the Jenkins dashboard, click "New Item".
+- In the "Item Name" field, enter the name of the project, "AntGAEDemo".
+- Click the "Freestyle Project" radio button, and click "OK".
+- Paste in the URL of the GitHub repository page, https://github.com/jamesmortensen/AntGAEDemo, in the "GitHub project" field.
+- In the "Source Code Management" section, select the "Git" radio button.
+- Enter "https://github.com/jamesmortensen/AntGAEDemo.git" in the "Repository URL" field.
+- In the "Build" section, click the "Add Build Step" dropdown, and click "Invoke Ant".
+- Select your ant installation in the "Ant Version" dropdown.
+- In the "Targets" section, enter "download eclipse-test-runner" to specify the download and eclipse-test-runner targets.
+- Click "Save"
+- Test the configuration by clicking "Build Now" in the left menu of the project dashboard.
