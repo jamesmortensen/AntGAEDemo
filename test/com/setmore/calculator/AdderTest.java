@@ -1,6 +1,7 @@
 package com.setmore.calculator;
 import junit.framework.TestCase;
 
+import com.setmore.calculator.Adder;
 
 public class AdderTest extends TestCase {
 	
