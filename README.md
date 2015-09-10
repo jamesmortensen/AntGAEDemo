@@ -54,3 +54,5 @@ This assumes you've already installed Jenkins. See the Jenkins documentation for
 - Under the Libraries tab, click "Add JARs...".
 - In the test-lib folder, select all the JARs except JUnit, and click "OK".
 - You may need to exclude the cucumber package from appengine validation. The help tooltip text will suggest options.
+
+At this time, Eclipse is not configured to automatically run the cucumber tests each time.

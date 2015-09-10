@@ -5,5 +5,11 @@
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="test-lib/cucumber-core-1.1.5.jar"/>
+	<classpathentry kind="lib" path="test-lib/cucumber-html-0.2.3.jar"/>
+	<classpathentry kind="lib" path="test-lib/cucumber-java-1.1.5.jar"/>
+	<classpathentry kind="lib" path="test-lib/cucumber-junit-1.1.5.jar"/>
+	<classpathentry kind="lib" path="test-lib/cucumber-jvm-deps-1.0.3.jar"/>
+	<classpathentry kind="lib" path="test-lib/gherkin-2.12.1.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
