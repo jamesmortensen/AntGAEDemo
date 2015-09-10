@@ -46,3 +46,11 @@ This assumes you've already installed Jenkins. See the Jenkins documentation for
 - In the "Targets" section, enter "download eclipse-test-runner" to specify the download and eclipse-test-runner targets.
 - Click "Save"
 - Test the configuration by clicking "Build Now" in the left menu of the project dashboard.
+
+
+## Configure Eclipse to recognize Cucumber
+
+- In Eclipse, right click on the project name and select "Build Path" then "Configure Build Path".
+- Under the Libraries tab, click "Add JARs...".
+- In the test-lib folder, select all the JARs except JUnit, and click "OK".
+- You may need to exclude the cucumber package from appengine validation. The help tooltip text will suggest options.
