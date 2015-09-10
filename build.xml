@@ -29,7 +29,6 @@
     <property name="build" value="war/WEB-INF/classes"/>
 	<property name="build-test" value="target/test-classes"/>
 	<property name="resources-test" value="test/resources"/>
-	<property name="appengine_sdk_shared_lib" value="${jars}/" />
 
     <target name="classpath">
         <path id="classpath">
